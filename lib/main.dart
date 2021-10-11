@@ -44,54 +44,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        titleTextStyle: const TextStyle(color: Colors.black),
-        title: const Text(
-          'AppBar',
-        ),
-      ),
-      body: DefaultTabController(
+    return DefaultTabController(
         length: 2,
-        child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                SliverList(
-                    delegate: SliverChildListDelegate(
-                  [
-                    Container(
-                        height: 60,
-                        color: colors[0],
-                        child: const Text('Random Height Child 1')),
-                    Container(
-                        height: 60,
-                        color: colors[1],
-                        child: const Text('Random Height Child 2')),
-                    Container(
-                        height: 60,
-                        color: colors[2],
-                        child: const Text('Random Height Child 3')),
-                  ],
-                )),
-                SliverPersistentHeader(
-                  floating: true,
-                  pinned: true,
-                  delegate: _SliverAppBarDelegate(
-                    const TabBar(
-                      labelColor: Colors.black,
-                      tabs: [
-                        Tab(text: "A"),
-                        Tab(text: "B"),
-                      ],
-                    ),
-                  ),
-                ),
-              ];
-            },
-            body: TabBarView(children: [
+        child: Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            titleTextStyle: const TextStyle(color: Colors.black),
+            title: const Text(
+              'AppBar',
+            ),
+          ),
+          body: CustomScrollView(slivers: [
+            SliverToBoxAdapter(
+                child: Container(
+              height: 180,
+              child: ListView(
+                children: [
+                  Container(
+                      height: 60,
+                      color: colors[0],
+                      child: const Text('Random Height Child 1')),
+                  Container(
+                      height: 60,
+                      color: colors[1],
+                      child: const Text('Random Height Child 2')),
+                  Container(
+                      height: 60,
+                      color: colors[2],
+                      child: const Text('Random Height Child 3')),
+                ],
+              ),
+            )),
+            SliverToBoxAdapter(
+              child: TabBar(
+                labelColor: Colors.black,
+                tabs: [
+                  Tab(text: "A"),
+                  Tab(text: "B"),
+                ],
+              ),
+            ),
+            SliverFillRemaining(
+                child: TabBarView(children: [
               GridView.builder(
                   itemCount: 30,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -113,43 +108,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   })
             ])),
-      ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.forward),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => ImageSection(),
-              ),
-            );
-          }),
-    );
-  }
-}
-
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate(this.tab);
-
-  final TabBar tab;
-
-  @override
-  double get minExtent => tab.preferredSize.height;
-
-  @override
-  double get maxExtent => tab.preferredSize.height;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Colors.white,
-      child: tab,
-    );
-  }
-
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return false;
+          ]),
+          floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.forward),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => ImageSection(),
+                  ),
+                );
+              }),
+        ));
   }
 }
