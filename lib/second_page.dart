@@ -2,16 +2,6 @@ import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 
-int isolate1(List<int> n) {
-  int sum = 0;
-
-  for (int i = 0; i < n.length; i++) {
-    sum = sum + n[i];
-
-    print(sum);
-  }
-  return sum;
-}
 
 class ImageSection extends StatefulWidget {
   @override
@@ -36,7 +26,7 @@ class _ImageSectionState extends State<ImageSection> {
                   await Isolate.spawn(echo, receivePort.sendPort);
 
                   var sendPort = await receivePort.first;
-                  int  sum = await sendReceive(sendPort, [1, 5, 2, 3, 7]);
+                  int sum = await sendReceive(sendPort, [1, 5, 2, 3, 7]);
                   print('received $sum');
 
                   final snackBar = SnackBar(
