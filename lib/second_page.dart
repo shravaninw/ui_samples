@@ -36,11 +36,11 @@ class _ImageSectionState extends State<ImageSection> {
                   await Isolate.spawn(echo, receivePort.sendPort);
 
                   var sendPort = await receivePort.first;
-                  var list = await sendReceive(sendPort, [1, 5, 2, 3, 7]);
-                  print('received $list');
+                  int  sum = await sendReceive(sendPort, [1, 5, 2, 3, 7]);
+                  print('received $sum');
 
                   final snackBar = SnackBar(
-                    content: Text('Sum=$list'),
+                    content: Text('Sum=$sum'),
                     action: SnackBarAction(
                       label: 'Undo',
                       onPressed: () async {
